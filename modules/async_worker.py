@@ -571,9 +571,9 @@ def worker():
                 direct_return = False
 
             if direct_return:
-                d = [('Upscale (Fast)', '2x')]
+                d = {"Upscale By": f, "Upscale Mode": "Fast"}
                 is_nsfw, target_image, logged_image_path = log(uov_input_image, d, async_task=async_task)
-                yield_result(async_task, target_image, do_not_show_finished_images=True, img_paths=logged_image_path, is_nsfw=is_nsfw)
+                yield_result(async_task, target_image, do_not_show_finished_images=True, img_paths=str(logged_image_path), is_nsfw=is_nsfw)
                 return
 
             tiled = True
@@ -842,27 +842,28 @@ def worker():
                     meta = {
                         'Prompt': task['log_positive_prompt'],
                         'Negative Prompt': task['log_negative_prompt'],
-                        'Fooocus V2 Expansion': task['expansion'],
                         'Styles': str(raw_style_selections),
                         'Performance': performance_selection,
                         'Resolution': str((width, height)),
-                        'Sharpness': sharpness,
-                        'Guidance Scale': guidance_scale,
-                        'ADM Guidance': str((
-                            modules.patch.positive_adm_scale,
-                            modules.patch.negative_adm_scale,
-                            modules.patch.adm_scaler_end)),
                         'Base Model': base_model_name,
+                        'Base Model Hash': all_models.checkpoint_models[base_model_name].sha256,
                         'Refiner Model': refiner_model_name,
+                        "Refiner Model Hash": all_models.checkpoint_models[refiner_model_name]
+                        if refiner_model_name != "None"
+                        else None,
                         'Refiner Switch': refiner_switch,
+                        "LoRAs": [{
+                            "name": name,
+                            "weight": weight,
+                            "hash": all_models.lora_models[name].sha256,
+                        } for name, weight in loras if name != "None"],
+                        'CFG Scale': guidance_scale,
+                        'Sharpness': sharpness,
                         'Sampler': sampler_name,
                         'Scheduler': scheduler_name,
-                        'Seed': task['task_seed'],
+                        'Seed': str(task['task_seed']),
                         'Version': fooocus_version.version
                     }
-                    for li, (n, w) in enumerate(loras):
-                        if n != 'None':
-                            meta[f'LoRA {li + 1}'] = f'{n} : {w}'
 
                     is_nsfw, target_image, logged_image_path = log(x, meta, async_task=async_task)
                     img_paths.append(str(logged_image_path))
@@ -1174,25 +1175,30 @@ def worker():
                     is_nsfw_list = []
                     for x in imgs:
                         meta = {
-                            "Prompt": p_txt,
-                            "Negative": n_txt,
-                            "steps": steps,
-                            "cfg": gen_data["cfg"],
-                            "width": width,
-                            "height": height,
-                            "seed": seed,
-                            "sampler_name": gen_data["sampler_name"],
-                            "scheduler": gen_data["scheduler"],
-                            "base_model_name": gen_data["base_model_name"],
-                            "base_model_hash": model_info.sha256,
-                            "loras": [{
-                                "name": lora[0],
-                                "weight": lora[1],
-                                "hash": all_models.get_model(lora[0]).sha256 if all_models.get_model(lora[0]) else None,
-                            } for lora in loras],
-                            "start_step": start_step,
-                            "denoise": denoise,
-                            "clip_skip": gen_data["clip_skip"],
+                            "Prompt": gen_data["prompt"],
+                            "Negative Prompt": gen_data["negative"],
+                            "Styles": gen_data["style_selection"],
+                            "Performance": gen_data["performance_selection"],
+                            "Resolution": str((width, height)),
+                            "Base Model": gen_data["base_model_name"],
+                            "Base Model Hash": model_info.sha256,
+                            "Refiner Model": gen_data["_refiner_model_name"],
+                            "Refiner Model Hash": all_models.checkpoint_models[
+                                gen_data["_refiner_model_name"]
+                            ]
+                            if gen_data["_refiner_model_name"] != "None"
+                            else None,
+                            "Refiner Switch": gen_data["_refiner_switch"],
+                            "LoRAs": [{
+                                "name": name,
+                                "weight": weight,
+                                "hash": all_models.lora_models[name].sha256,
+                            } for name, weight in loras if name != "None"],
+                            "CFG Scale": gen_data["cfg"],
+                            "Clip Skip": gen_data["clip_skip"],
+                            "Sampler": gen_data["sampler_name"],
+                            "Scheduler": gen_data["scheduler"],
+                            "Seed": str(seed),
                             "Version": fooocus_version.version,
                         }
                         is_nsfw, target_image, logged_image_path = log(x, meta, async_task=async_task)
