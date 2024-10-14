@@ -46,9 +46,13 @@ def log(img, meta, async_task: "AsyncTask"):
     metadata.add_text("parameters", json.dumps(meta))
     # html_name = os.path.join(os.path.dirname(local_temp_filename), 'log.html')
     pil_image.save(local_temp_filename, pnginfo=metadata)
+
     script_callbacks.image_saved_callback(
         script_callbacks.ImageSaveParams(
-            image=img, filename=local_temp_filename, task_metadata=async_task.metadata
+            image=img,
+            filename=local_temp_filename,
+            task=async_task,
+            pnginfo={"parameters": meta},
         )
     )
 
