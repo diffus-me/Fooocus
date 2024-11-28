@@ -18,7 +18,15 @@ exception_records = []
 
 
 class ImageSaveParams:
-    def __init__(self, image, filename, task: "AsyncTask", pnginfo: dict[str, Any]):
+    def __init__(
+        self,
+        image,
+        filename,
+        task: "AsyncTask",
+        pnginfo: dict[str, Any],
+        *,
+        nsfw_result: dict[str, Any] | None = None,
+    ):
         self.image = image
         """the PIL image itself"""
 
@@ -29,6 +37,7 @@ class ImageSaveParams:
         """task from request"""
 
         self.pnginfo = pnginfo
+        self.nsfw_result = nsfw_result
 
 
 ScriptCallback = namedtuple("ScriptCallback", ["script", "callback"])

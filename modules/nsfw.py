@@ -1,56 +1,53 @@
 #!/usr/bin/env python3
 
 import time
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import numpy as np
-import opennsfw2 as n2
-from keras import Model
+import requests
+from api import numpy_array_to_base64
 from PIL import Image, ImageFilter
 
 if TYPE_CHECKING:
     from modules.async_worker import AsyncTask
 
 _NSFW_ALLOWED_TIERS = {"basic", "plus", "pro", "api", "ltd s", "appsumo ltd tier 2"}
-_OPEN_NSFW_MODEL: Model | None = None
 
 
-def _get_open_nsfw_model() -> Model:
-    global _OPEN_NSFW_MODEL
+def _check_nsfw(endpoint: str, image: np.array, prompt: str) -> dict[str, Any]:
+    url = f"{endpoint}/api/v3/internal/moderation/content"
+    body = {
+        "text": prompt,
+        "image": {"encoded_image": numpy_array_to_base64(image)},
+    }
 
-    if _OPEN_NSFW_MODEL is None:
-        _OPEN_NSFW_MODEL = n2.make_open_nsfw_model()
+    response = requests.post(url, json=body)
+    response.raise_for_status()
 
-    return _OPEN_NSFW_MODEL
+    result = response.json()
 
-
-def _get_nsfw_probability(image: Image.Image) -> float:
-    preprocess_image = n2.preprocess_image(image, n2.Preprocessing.YAHOO)
-    inputs = np.expand_dims(preprocess_image, axis=0)
-
-    model = _get_open_nsfw_model()
-    predictions = model.predict(inputs)
-    _, nsfw_probability = predictions[0]
-
-    return nsfw_probability
+    return result
 
 
-def nsfw_blur(image: Image.Image, async_task: "AsyncTask", threshold=0.75) -> Image.Image | None:
-    if (
-        async_task.metadata is not None
-        and async_task.metadata["user-tier"].lower() in _NSFW_ALLOWED_TIERS
-    ):
-        return None
+def nsfw_blur(
+    image: np.array, prompt: str, async_task: "AsyncTask"
+) -> tuple[Image.Image | None, dict[str, Any] | None]:
+    assert async_task.metadata is not None
+
+    if async_task.metadata["user-tier"].lower() in _NSFW_ALLOWED_TIERS:
+        return None, None
+
+    endpoint = async_task.metadata["x-diffus-api-gateway-endpoint"]
 
     print("[NSFW] Start detecting NSFW content")
 
     start_at = time.perf_counter()
-    probability = _get_nsfw_probability(image)
+    result = _check_nsfw(endpoint, image, prompt)
     ended_at = time.perf_counter()
-    print(f"[NSFW] NSFW probability is {probability}, threshold is {threshold}")
+
     print(f"[NSFW] Detecting NSFW has taken: {(ended_at - start_at):.2f} seconds")
 
-    if probability > threshold:
-        return image.filter(ImageFilter.BoxBlur(10))
+    if result["flag"]:
+        return Image.fromarray(image).filter(ImageFilter.BoxBlur(10)), result
 
-    return None
+    return None, result
