@@ -30,9 +30,7 @@ def log(img, meta, async_task: "AsyncTask"):
     if args_manager.args.disable_image_log:
         return False, img, ""
 
-    pil_image = Image.fromarray(img)
-    blured_image = nsfw_blur(pil_image, async_task)
-
+    blured_image, nsfw_result = nsfw_blur(img, meta["Prompt"], async_task)
     if blured_image:
         is_nsfw = True
         return True, np.array(blured_image), ""
@@ -45,7 +43,8 @@ def log(img, meta, async_task: "AsyncTask"):
     metadata = PngInfo()
     metadata.add_text("parameters", json.dumps(meta))
     # html_name = os.path.join(os.path.dirname(local_temp_filename), 'log.html')
-    pil_image.save(local_temp_filename, pnginfo=metadata)
+
+    Image.fromarray(img).save(local_temp_filename, pnginfo=metadata)
 
     script_callbacks.image_saved_callback(
         script_callbacks.ImageSaveParams(
@@ -53,6 +52,7 @@ def log(img, meta, async_task: "AsyncTask"):
             filename=local_temp_filename,
             task=async_task,
             pnginfo={"parameters": meta},
+            nsfw_result=nsfw_result,
         )
     )
 
