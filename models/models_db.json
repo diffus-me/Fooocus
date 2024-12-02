@@ -10,56 +10,56 @@
     "model_type": "checkpoint",
     "name": "flux1-schnell-fp8.safetensors",
     "sha256": "ead426278b49030e9da5df862994f25ce94ab2ee4df38b556ddddb3db093bf72",
-    "url": "https://huggingface.co/Comfy-Org/flux1-schnell/blob/main/flux1-schnell-fp8.safetensors",
+    "url": "https://huggingface.co/Comfy-Org/flux1-schnell/resolve/main/flux1-schnell-fp8.safetensors",
     "base": "Flux.1 S"
   },
   {
     "model_type": "checkpoint",
     "name": "flux1-dev.safetensors",
     "sha256": "2eda627c8aee140edc77e28ed8dd3c662928ae60f0f960f36824f8862dcbb713",
-    "url": "https://civitai-delivery-worker-prod.5ac0637cfd0766c97916cefa3764fbdf.r2.cloudflarestorage.com/model/195712/flux1Dev8x8E4m3fn.Dkyf.safetensors?X-Amz-Expires=86400&response-content-disposition=attachment%3B%20filename%3D%22flux_dev.safetensors%22&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=e01358d793ad6966166af8b3064953ad/20241014/us-east-1/s3/aws4_request&X-Amz-Date=20241014T011222Z&X-Amz-SignedHeaders=host&X-Amz-Signature=72ceb7b20dd5f1ca1422240c622d21411dc34da7b658ae205995f1be3da10a0f",
+    "url": "https://civitai.com/api/download/models/716624",
     "base": "Flux.1 D"
   },
   {
     "model_type": "checkpoint",
     "name": "fluxRealisticV1_v10.safetensors",
     "sha256": "1999edb84691bad10a83cc60c25c9fef8e359e67fcf55b7959dafa775073909e",
-    "url": "https://civitai-delivery-worker-prod.5ac0637cfd0766c97916cefa3764fbdf.r2.cloudflarestorage.com/model/1411207/fluxRealisticV1Samay.Yyet.safetensors?X-Amz-Expires=86400&response-content-disposition=attachment%3B%20filename%3D%22fluxRealisticV1_v10.safetensors%22&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=e01358d793ad6966166af8b3064953ad/20241014/us-east-1/s3/aws4_request&X-Amz-Date=20241014T053510Z&X-Amz-SignedHeaders=host&X-Amz-Signature=fe64ba3766886b4c30a1004cb9dee2b176cc2a6f1e74f8db482de352b8c7ca9f",
+    "url": "https://civitai.com/api/download/models/729439",
     "base": "Flux.1 D"
   },
   {
     "model_type": "checkpoint",
     "name": "fluxRefiner_v11.safetensors",
     "sha256": "27d68ba250fc777d98f189658e9c69b2abbe7e3a13175b273f635722f989b3f3",
-    "url": "https://civitai-delivery-worker-prod.5ac0637cfd0766c97916cefa3764fbdf.r2.cloudflarestorage.com/model/472971/fluxrefinerV11.zQwr.safetensors?X-Amz-Expires=86400&response-content-disposition=attachment%3B%20filename%3D%22fluxRefiner_v11.safetensors%22&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=e01358d793ad6966166af8b3064953ad/20241014/us-east-1/s3/aws4_request&X-Amz-Date=20241014T024348Z&X-Amz-SignedHeaders=host&X-Amz-Signature=44ed75017fda69fcd423945552b326b85c235d4f205d5ec28874bd487259e234",
+    "url": "https://civitai.com/api/download/models/631734",
     "base": "Flux.1 D"
   },
   {
     "model_type": "checkpoint",
     "name": "artfusionFluxCCA4_v10.safetensors",
     "sha256": "235b4c398b684c605c10430fbf462248994f30c8b37a24703f4e638c6870dd91",
-    "url": "https://civitai-delivery-worker-prod.5ac0637cfd0766c97916cefa3764fbdf.r2.cloudflarestorage.com/model/472971/artfusionfluxCCA.WQ28.safetensors?X-Amz-Expires=86400&response-content-disposition=attachment%3B%20filename%3D%22artfusionFluxCCA4_v10.safetensors%22&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=e01358d793ad6966166af8b3064953ad/20241014/us-east-1/s3/aws4_request&X-Amz-Date=20241014T025802Z&X-Amz-SignedHeaders=host&X-Amz-Signature=84b074dfdd0e2f417ac7b525481d320b0735f7f00e32c0be4824b34bd1456caf",
+    "url": "https://civitai.com/api/download/models/754962",
     "base": "Flux.1 S"
   },
   {
     "model_type": "checkpoint",
     "name": "fluxArtfusion4Steps_v12.safetensors",
     "sha256": "fad13e7bad21cf6265b756545c9a0f90177533e3e313a5bf910f6f97043068b3",
-    "url": "https://civitai-delivery-worker-prod.5ac0637cfd0766c97916cefa3764fbdf.r2.cloudflarestorage.com/model/472971/artfusionfluxV12.JoGk.safetensors?X-Amz-Expires=86400&response-content-disposition=attachment%3B%20filename%3D%22fluxArtfusion4Steps_v12.safetensors%22&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=e01358d793ad6966166af8b3064953ad/20241014/us-east-1/s3/aws4_request&X-Amz-Date=20241014T025750Z&X-Amz-SignedHeaders=host&X-Amz-Signature=ddc4a7513c892da6c02a17fea56e620cfc05d6052aff927723d846878699368c",
+    "url": "https://civitai.com/api/download/models/760338",
     "base": "Flux.1 S"
   },
   {
     "model_type": "lora",
     "name": "Dark_and_Colorful_FLUX_OT.safetensors",
     "sha256": "faafecdaee3f14f541a197df9503007595b24ae5285296c15b30274141749ef0",
-    "url": "https://civitai-delivery-worker-prod.5ac0637cfd0766c97916cefa3764fbdf.r2.cloudflarestorage.com/model/3855458/darkAndColorfulFLUX.luV1.safetensors?X-Amz-Expires=86400&response-content-disposition=attachment%3B%20filename%3D%22Dark_and_Colorful_FLUX_OT.safetensors%22&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=e01358d793ad6966166af8b3064953ad/20241014/us-east-1/s3/aws4_request&X-Amz-Date=20241014T024743Z&X-Amz-SignedHeaders=host&X-Amz-Signature=c40c35cb7f972cb482b1818ba0c389d09f9206e64beab2f6b67aa89b1a3fca7e",
+    "url": "https://civitai.com/api/download/models/830434",
     "base": "Flux.1 D"
    },
   {
     "model_type": "checkpoint",
     "name": "sd3_medium_incl_clips.safetensors",
     "sha256": "3bb7f21bc5fb450220f4eb78a2f276b15422309d5166a4bdeb8c3b763a3a0581",
-    "url": "https://cdn-lfs-us-1.huggingface.co/repos/e2/a1/e2a1fa97e711ee8a522ec09a542b1577904208d820521111408766a594041429/3bb7f21bc5fb450220f4eb78a2f276b15422309d5166a4bdeb8c3b763a3a0581?response-content-disposition=attachment%3B+filename*%3DUTF-8%27%27sd3_medium_incl_clips.safetensors%3B+filename%3D%22sd3_medium_incl_clips.safetensors%22%3B&Expires=1724083799&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyNDA4Mzc5OX19LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmh1Z2dpbmdmYWNlLmNvL3JlcG9zL2UyL2ExL2UyYTFmYTk3ZTcxMWVlOGE1MjJlYzA5YTU0MmIxNTc3OTA0MjA4ZDgyMDUyMTExMTQwODc2NmE1OTQwNDE0MjkvM2JiN2YyMWJjNWZiNDUwMjIwZjRlYjc4YTJmMjc2YjE1NDIyMzA5ZDUxNjZhNGJkZWI4YzNiNzYzYTNhMDU4MT9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSoifV19&Signature=mb34aaaH5-mGpv%7EOJhJajSFNqLICWET0pDH30y7Rc5CXyEknyvEGYdsTxUlc7VqcMKamM2kFdHFNm7DumjWry816b6TzsB%7EuBe7LeFLXfVhVyw1l3XjuV3EeXGmKSTW9CH7rJCQ4%7ETjZ6Hnz4sE2pqG83mowmwJa4%7EM7pD%7EhfMoXpMfRn02nksXy1Jp9x%7ECmehWYwveK681-LFLzfeX3n6eoTD96Uqs9Llw5KxRaSF1P45jdSQWz--9SEOFCEqVY85sWL6RbDMvCT0knISmMptSZBA0NivBZDga5v%7EOBUZmjxnqtx4ht6DCyWIywHXWWd0HPBhmmnRbxcwohhkvOzA__&Key-Pair-Id=K24J24Z295AEI9",
+    "url": "https://civitai.com/api/download/models/568278",
     "base": "SD3"
   },
   {

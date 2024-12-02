@@ -18,9 +18,15 @@ def _get_binary_path(sha256: str) -> Path:
     return Path(settings.binary_dir) / sha256[:2] / sha256[2:4] / sha256[4:6] / sha256
 
 
-def _download_file(url: str, headers: dict[str, str] | None, path: Path, chunk_size: int) -> str:
+def _download_file(
+    url: str,
+    headers: dict[str, str] | None,
+    params: dict[str, str] | None,
+    path: Path,
+    chunk_size: int,
+) -> str:
     hash_calculator = hashlib.sha256()
-    response = requests.get(url, headers=headers, stream=True)
+    response = requests.get(url, headers=headers, params=params, stream=True)
     response.raise_for_status()
     with path.open("wb") as fp:
         for data in response.iter_content(chunk_size=chunk_size):
@@ -33,6 +39,7 @@ def _download_file(url: str, headers: dict[str, str] | None, path: Path, chunk_s
 def _download_file_with_retry(
     url: str,
     headers: dict[str, str] | None,
+    params: dict[str, str] | None,
     path: Path,
     sha256: str | None,
     *,
@@ -44,7 +51,7 @@ def _download_file_with_retry(
 
     for _ in range(retries):
         try:
-            local_sha256 = _download_file(url, headers, path, chunk_size)
+            local_sha256 = _download_file(url, headers, params, path, chunk_size)
         except requests.HTTPError as _error:
             if _error.response.status_code == 404:
                 raise
@@ -105,6 +112,8 @@ class ModelInfo(BaseModel):
         assert os.path.exists(self.filename), f"Model '{self.name}' does not exist"
 
     def download_model(self) -> None:
+        from settings import settings
+
         path = Path(self.filename)
         if path.exists():
             return
@@ -112,7 +121,13 @@ class ModelInfo(BaseModel):
         print(f"Start downloading model '{self.name}' from url '{self.url}' to '{path}'")
         path.parent.mkdir(exist_ok=True, parents=True)
         try:
-            _download_file_with_retry(self.url, None, path, self.sha256)
+            _download_file_with_retry(
+                self.url,
+                None,
+                {"token": settings.civitai_token} if "civitai" in self.url else None,
+                path,
+                self.sha256,
+            )
         except Exception:
             path.unlink()
             print(f"Model '{self.name}' downloaded failed")
