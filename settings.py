@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     models_db_path: str = "./models/models_db.json"
 
     feature_permissions_url: str = ""
+    civitai_token: str = ""
 
     class Config:
         env_file = ".env"
