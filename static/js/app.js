@@ -52,7 +52,6 @@ createApp({
   delimiters: ["[[", "]]"],
   data() {
     return {
-      hostname: "",
       settingTab: "settings",
       prompt: "",
       _performance: "Speed",
@@ -806,7 +805,7 @@ createApp({
       }
       if (this.generating && this.runningTaskId) {
         socket = new WebSocket(
-          `${wsProtocol}://${this.hostname}/api/focus/ws/generate?` +
+          `${wsProtocol}://${window.location.host}/api/focus/ws/generate?` +
             new URLSearchParams({
               task_id: this.runningTaskId,
             }),
@@ -814,7 +813,7 @@ createApp({
       } else {
         this.runningTaskId = randomId();
         socket = new WebSocket(
-          `${wsProtocol}://${this.hostname}/api/focus/ws/generate?` +
+          `${wsProtocol}://${window.location.host}/api/focus/ws/generate?` +
             new URLSearchParams({
               new_task_id: this.runningTaskId,
               task_type: this.taskType,
@@ -1316,7 +1315,6 @@ createApp({
         })
         .then((options) => {
           this.defaultOptions = options;
-          this.hostname = options.hostname;
           this.aspectRatios = options.aspect_ratios.options;
           this.aspectRatio = options.aspect_ratios.default;
           this.aspectRatiosNumber = options.aspect_ratios.options.map(

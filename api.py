@@ -385,7 +385,6 @@ class DefaultSD3Options(BaseModel):
 
 
 class DefaultOptions(BaseModel):
-    hostname: str = Field(description="Base url of the websocket.")
     performances: OptionList = Field(description="Performance options.")
     aspect_ratios: OptionList = Field(description="Aspect ratio options.")
     styles: StyleOptions = Field(description="Style options.")
@@ -1192,7 +1191,6 @@ def create_api(
             if performance not in performance_selections:
                 performance_selections.append(performance)
             return DefaultOptions(
-                hostname=get_hostname(request, settings.hostname),
                 performances=OptionList(
                     default=performance,
                     options=performance_selections,
@@ -1266,7 +1264,6 @@ def create_api(
         if performance not in performance_selections:
             performance_selections.append(performance)
         return DefaultOptions(
-            hostname=get_hostname(request, settings.hostname),
             performances=OptionList(
                 default=performance,
                 options=performance_selections,
