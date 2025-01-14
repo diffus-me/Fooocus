@@ -36,12 +36,13 @@ async_tasks: list[AsyncTask] = []
 running_task: AsyncTask | None = None
 finished_tasks: list[AsyncTask] = []
 stop_or_skipped_tasks: list[AsyncTask] = []
-
+busy_time: float = 0
 
 def worker():
     global async_tasks
     global running_task
     global finished_tasks
+    global busy_time
 
     import traceback
     import math
@@ -1229,10 +1230,14 @@ def worker():
         return
 
     script_callbacks.app_ready_callback()
+    logger.info(f"worker thread, read to handle tasks")
     while True:
-        time.sleep(0.01)
+        time.sleep(1)
+        logger.info(f"worker thread, current len(async_tasks): {len(async_tasks)}")
         if len(async_tasks) > 0:
             task = async_tasks.pop(0)
+            logger.info(f"worker thread, popped a task from async_tasks, task_id: {task.task_id}, remaining tasks: {len(async_tasks)}")
+            task_begin_at = time.time()
             try:
                 running_task = task
                 script_callbacks.before_task_callback(task.task_id)
@@ -1248,7 +1253,10 @@ def worker():
             except Exception as e:
                 traceback.print_exc()
                 task.yields.append(['failed', e.__str__()])
+                logger.info(f"worker thread, task {task.task_id} failed")
             finally:
+                task_used_time = time.time() - task_begin_at
+                logger.info(f"worker thread, task {task.task_id} finished, used time {task_used_time:.2f}")
                 finished_tasks.append(task)
                 script_callbacks.after_task_callback(task.task_id)
                 running_task = None
@@ -1256,6 +1264,8 @@ def worker():
                 if torch.cuda.is_available():
                     torch.cuda.empty_cache()
                     torch.cuda.ipc_collect()
+                busy_time += task_used_time
+    logger.info(f"worker thread: endded")
 
 
 def start():
