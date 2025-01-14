@@ -61,6 +61,7 @@ async def generate_clicked(
 
     yield Progress(flag='preparing', task_id=task_id, status=Status(percentage=1, title='Waiting for task to start ...', images=[]))
 
+    logger.info(f"generate_clicked, got a task {task.task_id} from client, push it to worker.async_tasks")
     worker.async_tasks.append(task)
 
     started = False
